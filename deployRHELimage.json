@@ -1,0 +1,39 @@
+{
+    "type": "Microsoft.VirtualMachineImages/imageTemplates",
+    "apiVersion": "2019-05-01-preview",
+    "location": "westcentralus",
+    "dependsOn": [],
+    "properties": {
+        "source": {
+            "type": "PlatformImage",
+                "publisher": "RedHat",
+                "offer": "RHEL",
+                "sku": "7.6",
+                "version": "7.6.2019062116"
+            
+        },
+        "customize": [
+            {
+                "type": "Shell",
+                "name": "customizeScript",
+                "scriptUri": "https://raw.githubusercontent.com/EntropyGuru/RHELworkshop/master/customizeScript.sh"
+            }
+        ],
+        "distribute": 
+        [
+            {   
+                "type": "SharedImage",
+                "galleryImageId": "/subscriptions/<subscription_id>/resourceGroups/vmbuild/providers/Microsoft.Compute/galleries/<gallery_name>/images/<image_name>",
+                "runOutputName": "rhel76SigRo",
+                "artifactTags": {
+                    "source": "azureVmImageBuilder",
+                    "baseosimg": "rhel76"
+                },
+                "replicationRegions": [
+                  "westeurope",
+                  "northeurope"
+                ]
+            }
+        ]
+    }
+}
